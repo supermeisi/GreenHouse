@@ -23,22 +23,24 @@ services:
       GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD}
     volumes:
       - grafana_data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
     depends_on:
       - influxdb
     restart: unless-stopped
 
-  api_reader:
+  shelly_reader:
     build: .
-    container_name: api_reader
+    container_name: shelly_reader
     environment:
       PYTHONUNBUFFERED: "1"
 
-      # API
-      API_BASE_URL: ${API_BASE_URL}
-      API_TOKEN: ${API_TOKEN}
       POLL_INTERVAL: ${POLL_INTERVAL}
+      REQUEST_TIMEOUT: ${REQUEST_TIMEOUT}
+      SHELLY_USERNAME: ${SHELLY_USERNAME}
+      SHELLY_PASSWORD: ${SHELLY_PASSWORD}
+      SHELLY_DEVICES: ${SHELLY_DEVICES}
+      SHELLY_DEVICES_JSON: ${SHELLY_DEVICES_JSON}
 
-      # InfluxDB v1
       INFLUX_HOST: influxdb
       INFLUX_PORT: "8086"
       INFLUX_DB: ${INFLUXDB_DB}
