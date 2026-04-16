@@ -5,12 +5,12 @@ datasources:
     type: influxdb
     access: proxy
     url: http://influxdb:8086
-    database: ${INFLUXDB_DB}
-    user: ${INFLUXDB_ADMIN_USER}
+    user: $INFLUXDB_ADMIN_USER
     secureJsonData:
-      password: ${INFLUXDB_ADMIN_PASSWORD}
+      password: $INFLUXDB_ADMIN_PASSWORD
     jsonData:
-      httpMode: POST
       version: InfluxQL
+      dbName: $INFLUXDB_DB
+      httpMode: POST
     isDefault: true
     editable: true
