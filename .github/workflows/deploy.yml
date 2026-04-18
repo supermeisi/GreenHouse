@@ -1,0 +1,29 @@
+name: Deploy to Server
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Deploy files via SFTP
+          uses: Dylan700/sftp-upload-action@latest
+          with:
+            server: ${{ secrets.HOST }}
+            username: ${{ secrets.USER }}
+            key: ${{ secrets.KEY }}
+            port: ${{ secrets.PORT }}
+            uploads: |
+              ./ => ${{ secrets.TARGET_DIR }}
+            ignore: |
+              .git/
+              .github/
+              .gitignore
