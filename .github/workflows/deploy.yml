@@ -27,3 +27,15 @@ jobs:
             .git/
             .github/
             .gitignore
+            
+      - name: Docker Compose
+          uses: appleboy/ssh-action@v1.0.0
+          with:
+            host: ${{ secrets.HOST }}
+            username: ${{ secrets.USER }}
+            key: ${{ secrets.KEY }}
+            port: ${{ secrets.PORT }}
+            script: |
+              cd "${{ secrets.TARGET_DIR }}"
+              docker-compose down
+              docker-compose up -d
